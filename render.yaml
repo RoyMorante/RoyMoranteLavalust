@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: lavalust
+    env: docker
+    plan: free
+    buildCommand: ""
+    startCommand: /etc/init.d/apache2 start && tail -f /dev/null
+    dockerfilePath: ./Dockerfile
