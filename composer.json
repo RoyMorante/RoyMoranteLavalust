@@ -1,0 +1,14 @@
+{
+  "name": "lavalust/app",
+  "description": "LavaLust PHP MVC Framework",
+  "require": {
+    "php": ">=7.4",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
