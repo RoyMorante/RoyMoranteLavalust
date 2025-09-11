@@ -1,0 +1,4 @@
+# Force LF endings for Linux servers
+*.conf text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf

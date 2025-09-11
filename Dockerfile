@@ -1,16 +1,16 @@
-﻿FROM php:7.4-apache
+FROM php:8.2-apache
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Copy source code
-COPY . /var/www/html/
+# Copy app source code
+COPY . /var/www/html
 
-# Add custom Apache config
-COPY apache-lavalust.conf /etc/apache2/sites-available/lavalust.conf
+# Copy Apache config (no BOM) into sites-enabled
+COPY lavalust.conf /etc/apache2/sites-enabled/lavalust.conf
 
-# Enable site config
-RUN a2ensite lavalust.conf \
-    && a2dissite 000-default.conf
-
+# Expose HTTP port
 EXPOSE 80
+
+# Start Apache
+CMD ["apache2-foreground"]
