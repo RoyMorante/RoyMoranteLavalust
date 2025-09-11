@@ -6,10 +6,16 @@ RUN a2enmod rewrite
 # Copy source code
 COPY . /var/www/html/
 
-# Set working directory to public
-WORKDIR /var/www/html/public
+# Set DocumentRoot to public/
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-# Apache config - allow .htaccess overrides
+# Update Apache config to point to /public
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
+    /etc/apache2/sites-available/000-default.conf \
+    /etc/apache2/apache2.conf \
+    /etc/apache2/sites-enabled/000-default.conf
+
+# Allow .htaccess overrides
 RUN echo '<Directory /var/www/html/public/>\n\
     AllowOverride All\n\
     Require all granted\n\
