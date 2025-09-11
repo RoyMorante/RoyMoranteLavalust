@@ -1,17 +1,19 @@
-# Use PHP with Apache
-FROM php:7.4-apache
+﻿FROM php:7.4-apache
 
-# Install required PHP extensions
-RUN docker-php-ext-install pdo pdo_mysql
-
-# Copy project files
-COPY . /var/www/html/
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Enable Apache rewrite module
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Expose port 80
+# Copy source code
+COPY . /var/www/html/
+
+# Set working directory to public
+WORKDIR /var/www/html/public
+
+# Apache config - allow .htaccess overrides
+RUN echo '<Directory /var/www/html/public/>\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>' > /etc/apache2/conf-available/lavalust.conf \
+    && a2enconf lavalust
+
 EXPOSE 80
