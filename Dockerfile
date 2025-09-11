@@ -6,7 +6,11 @@ RUN a2enmod rewrite
 # Copy source code
 COPY . /var/www/html/
 
-# Copy custom Apache config
-COPY apache-lavalust.conf /etc/apache2/sites-available/000-default.conf
+# Add custom Apache config
+COPY apache-lavalust.conf /etc/apache2/sites-available/lavalust.conf
+
+# Enable site config
+RUN a2ensite lavalust.conf \
+    && a2dissite 000-default.conf
 
 EXPOSE 80
