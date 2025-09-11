@@ -6,7 +6,7 @@ RUN a2enmod rewrite
 # Copy source code
 COPY . /var/www/html/
 
-# Set DocumentRoot to public/
+# Set Apache DocumentRoot to /var/www/html/public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 # Update Apache config to point to /public
