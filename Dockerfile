@@ -6,14 +6,8 @@ RUN a2enmod rewrite
 # Copy source code
 COPY . /var/www/html/
 
-# Set Apache DocumentRoot to /var/www/html/public
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
-
-# Update Apache config to point to /public
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/000-default.conf \
-    /etc/apache2/apache2.conf \
-    /etc/apache2/sites-enabled/000-default.conf
+# Set Apache DocumentRoot directly to /public
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
 # Allow .htaccess overrides
 RUN echo '<Directory /var/www/html/public/>\n\
