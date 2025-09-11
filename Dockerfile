@@ -6,16 +6,7 @@ RUN a2enmod rewrite
 # Copy source code
 COPY . /var/www/html/
 
-# Update Apache config to point DocumentRoot to /public
-RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' \
-    /etc/apache2/sites-available/000-default.conf \
-    /etc/apache2/sites-enabled/000-default.conf
-
-# Allow .htaccess overrides
-RUN echo '<Directory /var/www/html/public/>\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' > /etc/apache2/conf-available/lavalust.conf \
-    && a2enconf lavalust
+# Copy custom Apache config
+COPY apache-lavalust.conf /etc/apache2/sites-available/000-default.conf
 
 EXPOSE 80
